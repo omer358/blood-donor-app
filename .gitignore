@@ -1,0 +1,59 @@
+# Flutter/Dart related
+.dart_tool/
+.packages
+.pub/
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+.flutter-versions
+.idea/
+android/.gradle/
+android/app/key.properties
+
+# Flutter project files
+flutter_export_environment.sh
+flutter_export_environment.json
+
+# iOS related
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework/
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+ios/Flutter/ephemeral/
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+
+# Android related
+android/.gradle/
+android/app/key.properties
+android/local.properties
+android/app/google-services.json
+android/app/build/
+android/gradle/wrapper/gradle-wrapper.properties
+
+# Mac related files
+.DS_Store
+
+# VS Code
+.vscode/
+.vscode/launch.json
+.vscode/settings.json
+.vscode/tasks.json
+
+# IntelliJ
+*.iml
+*.ipr
+*.iws
+.idea/
+.idea/modules.xml
+.idea/workspace.xml
+.idea/libraries
+.idea/tasks.xml
+.idea/gradle.xml
+.idea/dictionaries
+.idea/vcs.xml
+*.jks
+
+# Generated plugin registrant
+.dart_tool/flutter_build/generated_main.dart
