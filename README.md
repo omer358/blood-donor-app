@@ -1,97 +1,107 @@
 # Blood Donor App
 
-A Flutter-based mobile application that allows donors to register with their phone number, submit ID information (or use automatic ID extraction), and receive notifications when blood banks need donations of their specific blood type. This project uses Firebase for authentication, storage, and notifications.
+A Flutter-based blood donor app that allows users to register and log in using email/password and Google sign-in. This app also uses Firebase for user authentication and Firestore for storing user data.
 
 ## Features
 
-- **Phone Number Authentication**: Donors register using Firebase Authentication via their phone number.
-- **ID Submission**: Donors can either manually input their ID details or upload a photo for automatic ID extraction.
-- **Notifications**: Donors receive push notifications when the blood bank requires a specific blood type.
-- **Data Management**: User information such as blood type, profession, and contact details is stored securely in Firebase Firestore.
+- User registration using email and password
+- User login using email and password
+- Google sign-in authentication
+- Navigation using GetX
+- Firebase Firestore integration for storing user data
+- Responsive state management with GetX
+- Error handling with GetX's Snackbar notifications
 
 ## Project Structure
 
-The project follows a feature-layered architecture using BLoC for state management:
-
 ```
 lib/
-├── data/
-│   ├── models/
-│   ├── repositories/
-├── logic/
-│   ├── blocs/
-│   └── cubits/
-├── presentation/
-│   ├── screens/
-│   └── widgets/
+├── controllers/
+│   └── auth_controller.dart      # Handles authentication logic
+├── screens/
+│   ├── login_screen.dart         # User login screen
+│   ├── register_screen.dart      # User registration screen
+│   └── home_screen.dart          # Home screen for authenticated users
 ├── services/
-├── app.dart
-└── main.dart
+│   └── auth_service.dart         # Handles Firebase Authentication and Firestore interaction
+└── main.dart                     # Entry point of the app
 ```
-
-- **Data Layer**: Manages models and repositories for handling data and interacting with Firebase.
-- **Logic Layer**: Contains the BLoC and Cubit classes responsible for state management.
-- **Presentation Layer**: Defines the UI, with screens for registration, ID submission, and notifications.
-- **Services Layer**: Contains Firebase services for authentication, Firestore, and Cloud Messaging.
 
 ## Getting Started
 
 ### Prerequisites
 
-- Flutter SDK: [Install Flutter](https://flutter.dev/docs/get-started/install)
-- Firebase project: [Set up Firebase](https://firebase.google.com/docs/flutter/setup) with Authentication, Firestore, and Cloud Messaging.
+- [Flutter](https://flutter.dev/) installed on your machine.
+- A Firebase project set up. Follow [this guide](https://firebase.google.com/docs/flutter/setup) to add Firebase to your Flutter app.
+- Enable **Email/Password Authentication** and **Google Authentication** in your Firebase project's Authentication settings.
+
+### Firebase Setup
+
+1. Add your Firebase configuration to the app by downloading the `google-services.json` file and placing it in the `android/app` directory.
+2. Enable the Firebase Authentication sign-in methods for Email/Password and Google in the Firebase Console.
 
 ### Installation
 
 1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/blood-donor-app.git
+   ```
+   git clone https://github.com/yourusername/blood-donor-app.git
+   ```
+
+2. Navigate to the project directory:
+   ```
    cd blood-donor-app
    ```
 
-2. Install dependencies:
-   ```bash
+3. Install dependencies:
+   ```
    flutter pub get
    ```
 
-3. Set up Firebase:
-   - Follow Firebase setup instructions to configure Firebase Authentication, Firestore, and Cloud Messaging.
-   - Add `google-services.json` for Android and `GoogleService-Info.plist` for iOS.
-
 4. Run the app:
-   ```bash
+   ```
    flutter run
    ```
 
-## Features Breakdown
+## Authentication Flow
 
-### Phone Number Authentication
+### Email and Password Authentication
 
-The app uses Firebase Authentication for verifying the donor's phone number. Once verified, the donor proceeds to submit ID information.
+- Users can register using their email and password.
+- After registration, they are automatically logged in and navigated to the `HomeScreen`.
+- On successful login, users are navigated to the `HomeScreen`.
 
-### ID Information Submission
+### Google Sign-In Authentication
 
-- **Manual Input**: Donors can enter details such as name, blood type, address, and profession.
-- **Automatic ID Extraction (Optional)**: The app allows donors to upload a photo of their ID, and the information is extracted using OCR.
+- Users can sign in using their Google account.
+- On successful login, users are navigated to the `HomeScreen`.
 
-### Notifications
+### Navigation and State Management
 
-Firebase Cloud Messaging is used to notify donors when the blood bank requires donations for specific blood types. Notifications are sent based on the donor's blood type.
+- Navigation between screens is handled using GetX's `Get.to()` method.
+- User authentication status is managed using GetX's `AuthController`.
+- Loading states are displayed during registration and login.
 
 ## Dependencies
 
-- [firebase_core](https://pub.dev/packages/firebase_core)
-- [firebase_auth](https://pub.dev/packages/firebase_auth)
-- [cloud_firestore](https://pub.dev/packages/cloud_firestore)
-- [firebase_messaging](https://pub.dev/packages/firebase_messaging)
-- [flutter_bloc](https://pub.dev/packages/flutter_bloc)
-- [image_picker](https://pub.dev/packages/image_picker) (for ID photo upload)
-- [firebase_ml_vision](https://pub.dev/packages/firebase_ml_vision) (for ID extraction via OCR, optional)
+The following dependencies are used in the project:
 
-## Contributing
+```yaml
+dependencies:
+  flutter:
+    sdk: flutter
+  firebase_core: latest_version
+  firebase_auth: latest_version
+  cloud_firestore: latest_version
+  google_sign_in: latest_version
+  get: latest_version
+```
 
-Feel free to submit pull requests or open issues. For major changes, please open an issue first to discuss what you'd like to change.
+## Screenshots
+
+Include screenshots of the app (e.g., login screen, registration screen, home screen) here.
+
+---
 
 ## License
 
-[MIT](LICENSE)
+This project is licensed under the MIT License.
