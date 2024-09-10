@@ -50,19 +50,21 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCIENu8cMBl2zy7NrP0Wb6wN9ZGU4UtxAY',
-    appId: '1:511977659705:android:633e17836836d56ad79ce8',
-    messagingSenderId: '511977659705',
-    projectId: 'blood-donor-app-81fa5',
-    storageBucket: 'blood-donor-app-81fa5.appspot.com',
+    apiKey: 'AIzaSyDTgEtvpl2xkIr4hQPsWkCvKxGlzr6epso',
+    appId: '1:283704459158:android:ad732e2ad01ca52891a7b7',
+    messagingSenderId: '283704459158',
+    projectId: 'test-7fe47',
+    storageBucket: 'test-7fe47.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCCx-fW2r3bsLCazZNc-LNs88TZ7sU3eHw',
-    appId: '1:511977659705:ios:a3b49b97e1f13c5dd79ce8',
-    messagingSenderId: '511977659705',
-    projectId: 'blood-donor-app-81fa5',
-    storageBucket: 'blood-donor-app-81fa5.appspot.com',
+    apiKey: 'AIzaSyA-4JPxPXrNCqPvwNi746mBUoex0qJirww',
+    appId: '1:283704459158:ios:b3cf8d4d7dd5869691a7b7',
+    messagingSenderId: '283704459158',
+    projectId: 'test-7fe47',
+    storageBucket: 'test-7fe47.appspot.com',
+    androidClientId: '283704459158-mjskm230pb45tngeifj9rvapt22c1953.apps.googleusercontent.com',
+    iosClientId: '283704459158-1m0foj6b2p56199emnfb0lgg1qg4f92i.apps.googleusercontent.com',
     iosBundleId: 'com.example.bloodDonor',
   );
 }

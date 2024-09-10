@@ -1,0 +1,129 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+
+import '../../controllers/AuthController.dart';
+import 'login.dart';
+
+class SignUpScreen extends StatelessWidget {
+  final AuthController authController = Get.put(AuthController());
+
+  SignUpScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const SizedBox(height: 100),
+                _buildHeaderText(),
+                const SizedBox(height: 20),
+                _buildSvgImage(),
+                const SizedBox(height: 20),
+                _buildEmailTextField(),
+              const SizedBox(height: 10),
+                _buildPasswordTextField(),
+                const SizedBox(height: 20),
+                _buildSignUpButton(),
+                _buildSignInButton(),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHeaderText() {
+    return const Directionality(
+      textDirection: TextDirection.rtl,
+      child: Text(
+        "إنشاء حساب",
+        textAlign: TextAlign.center,
+        style: TextStyle(fontSize: 35, fontWeight: FontWeight.w500),
+      ),
+    );
+  }
+
+  Widget _buildSvgImage() {
+    return SvgPicture.asset(
+      "assets/images/sign_up.svg",
+      width: 200,
+      height: 200,
+      fit: BoxFit.contain,
+    );
+  }
+
+  Widget _buildEmailTextField() {
+    return TextField(
+      keyboardType: TextInputType.emailAddress,
+      onChanged: (value) {
+        authController.email.value = value; // Bind input to controller
+      },
+      decoration: InputDecoration(
+        hintText: 'example@example.com',
+        hintStyle: const TextStyle(color: Colors.grey),
+        contentPadding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30.0),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPasswordTextField() {
+    return TextField(
+      obscureText: true,
+      onChanged: (value) {
+        authController.password.value = value; // Bind input to controller
+      },
+      decoration: InputDecoration(
+        hintText: 'Password',
+        hintStyle: const TextStyle(color: Colors.grey),
+        contentPadding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30.0),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSignUpButton() {
+    return SizedBox(
+      width: 200,
+      height: 50,
+      child: ElevatedButton(
+        onPressed: () {
+          authController.registerWithEmailAndPassword();  // Trigger OTP sending from controller
+        },
+        child: const Text(
+          "تسجيل",
+          style: TextStyle(fontSize: 20),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSignInButton() {
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text("لديك حساب؟"),
+          TextButton(
+            onPressed: () {
+              Get.off(LoginScreen());
+            },
+            child: const Text("تسجيل دخول"),
+          ),
+        ],
+      ),
+    );
+  }
+}
