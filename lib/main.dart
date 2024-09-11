@@ -1,3 +1,4 @@
+import 'package:blood_donor/presentation/screens/completeSignUp.dart';
 import 'package:blood_donor/presentation/screens/home.dart';
 import 'package:blood_donor/presentation/screens/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'firebase_options.dart';
+import 'service/auth_service.dart';
 
 void main() async {
   // Ensure that widgets are initialized
@@ -23,7 +25,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Blood Donor App',
+      title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
@@ -31,28 +33,52 @@ class MyApp extends StatelessWidget {
       darkTheme: ThemeData(
         colorScheme: const ColorScheme.dark(),
       ),
-      home: const AuthWrapper(), // Use the AuthWrapper to handle navigation
+      home: const AuthWrapper(), // Use the new AuthWrapper for dynamic routing
     );
   }
 }
 
+// This widget will listen to the authentication state and navigate accordingly
 class AuthWrapper extends StatelessWidget {
   const AuthWrapper({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<User?>(
-      stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (context, snapshot) {
-        // If the snapshot has user data, the user is logged in
-        if (snapshot.hasData) {
-          // If user is signed in, navigate to HomeScreen
-          return const HomeScreen();
-        } else {
-          // If the user is not signed in, navigate to LoginScreen
-          return LoginScreen();
-        }
-      },
+    return Scaffold(
+      body: StreamBuilder<User?>(
+        stream: AuthService().authStateChanges, // Listen to auth state changes
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            // Show a loading spinner while waiting for the authentication state
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          if (snapshot.hasData) {
+            // The user is logged in, check if the profile is complete
+            return FutureBuilder<bool>(
+              future: AuthService().isProfileComplete(),
+              builder: (context, profileSnapshot) {
+                if (profileSnapshot.connectionState ==
+                    ConnectionState.waiting) {
+                  // Show a loading spinner while checking profile completeness
+                  return const Center(child: CircularProgressIndicator());
+                }
+
+                if (profileSnapshot.hasData && profileSnapshot.data == true) {
+                  // Navigate to the HomeScreen if the profile is complete
+                  return  HomeScreen();
+                } else {
+                  // Navigate to CompleteSignup if the profile is incomplete
+                  return const CompleteSignup();
+                }
+              },
+            );
+          } else {
+            // The user is not logged in, navigate to the LoginScreen
+            return LoginScreen();
+          }
+        },
+      ),
     );
   }
 }

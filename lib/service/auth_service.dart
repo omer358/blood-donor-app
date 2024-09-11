@@ -9,6 +9,12 @@ class AuthService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
+  // Listen to auth state changes
+  Stream<User?> get authStateChanges => _auth.authStateChanges();
+
+  // Get the current user
+  User? get currentUser => _auth.currentUser;
+
   // Sign in with email and password
   Future<UserCredential> signInWithEmail(String email, String password) async {
     return await _auth.signInWithEmailAndPassword(
@@ -49,7 +55,7 @@ class AuthService {
       if (userDoc.exists) {
         log("the userDocs exists");
         return true;
-      }else {
+      } else {
         return false;
       }
     }
@@ -84,5 +90,10 @@ class AuthService {
   // Sign out
   Future<void> signOut() async {
     await _auth.signOut();
+  }
+
+  // Check if the user is signed in (helper method)
+  bool isSignedIn() {
+    return _auth.currentUser != null;
   }
 }
