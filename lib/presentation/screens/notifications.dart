@@ -1,8 +1,7 @@
 import 'package:blood_donor/controllers/notifications_controller.dart';
+import 'package:blood_donor/service/donation_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../service/donation_service.dart';
 
 class NotificationsScreen extends StatelessWidget {
   NotificationsScreen({super.key});
@@ -22,22 +21,24 @@ class NotificationsScreen extends StatelessWidget {
         }
         return ListView.builder(
           itemCount: controller.donationRequests.length,
-          reverse: true,
           itemBuilder: (context, index) {
             var request = controller.donationRequests[index];
+            bool active = request['active'] ?? true; // default to true if field is missing
+
             return ListTile(
               leading: CircleAvatar(
-                backgroundColor: getPresetColorForBloodType(request['bloodType']),
+                backgroundColor: getFixedColor(request['bloodType']),
                 child: Text(
-                    request['bloodType'],
-                  style: TextStyle(
-                    color: Colors.white
-                  ),
-                  ),
+                  request['bloodType'],
+                  style: const TextStyle(color: Colors.white),
                 ),
+              ),
               title: Text('حوجة لفصيلة دم ${request['bloodType']}'),
               subtitle: Text('الموقع: ${request['location']}'),
-              trailing: const Icon(Icons.arrow_forward),
+              trailing: Icon(
+                active ? Icons.bloodtype : Icons.check_circle,
+                color: active ? Colors.red : Colors.green,
+              ),
               onTap: () {
                 // Navigate to more details if needed
               },
@@ -48,18 +49,24 @@ class NotificationsScreen extends StatelessWidget {
     );
   }
 
-  // Returns a specific color based on the blood type
-  Color getPresetColorForBloodType(String bloodType) {
+  Color getFixedColor(String bloodType) {
     switch (bloodType) {
       case 'A+':
         return Colors.red;
-      case 'B+':
+      case 'A-':
         return Colors.blue;
-      case 'O+':
+      case 'B+':
         return Colors.green;
+      case 'B-':
+        return Colors.purple;
       case 'AB+':
         return Colors.orange;
-    // Add more as needed
+      case 'AB-':
+        return Colors.brown;
+      case 'O+':
+        return Colors.pink;
+      case 'O-':
+        return Colors.yellow;
       default:
         return Colors.grey;
     }
