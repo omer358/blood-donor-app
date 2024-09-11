@@ -44,7 +44,7 @@ class AuthController extends GetxController {
       log(isComplete.toString());
       if (isComplete) {
         log("the signup is completed");
-        Get.off(() => const HomeScreen()); // Navigate to HomeScreen if profile is complete
+        Get.off(() => HomeScreen()); // Navigate to HomeScreen if profile is complete
       } else {
         log("the signup is not completed");
         Get.off(() => const CompleteSignup()); // Navigate to CompleteSignup if profile is incomplete
@@ -64,7 +64,7 @@ class AuthController extends GetxController {
       bool isComplete = await _authService.isProfileComplete();
       if (isComplete) {
         log("the signup is completed");
-        Get.off(() => const HomeScreen()); // Navigate to HomeScreen if profile is complete
+        Get.off(() => HomeScreen()); // Navigate to HomeScreen if profile is complete
       } else {
         log("the signup is not completed");
         Get.off(() => const CompleteSignup()); // Navigate to CompleteSignup if profile is incomplete
