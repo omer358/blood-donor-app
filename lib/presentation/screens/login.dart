@@ -8,7 +8,7 @@ import '../../controllers/AuthController.dart';
 class LoginScreen extends StatelessWidget {
   final AuthController authController = Get.put(AuthController());
 
-   LoginScreen({super.key});
+  LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +34,13 @@ class LoginScreen extends StatelessWidget {
                   height: 20,
                 ),
                 _buildSignUpButton(),
+                const SizedBox(
+                  height: 10,
+                ),
+                _buildGoogleSignInButton(),
+                const SizedBox(
+                  height: 10,
+                ),
                 _buildSignInButton()
               ],
             ),
@@ -62,6 +69,7 @@ class LoginScreen extends StatelessWidget {
       fit: BoxFit.contain,
     );
   }
+
   Widget _buildEmailTextField() {
     return TextField(
       keyboardType: TextInputType.emailAddress,
@@ -71,7 +79,8 @@ class LoginScreen extends StatelessWidget {
       decoration: InputDecoration(
         hintText: 'example@example.com',
         hintStyle: const TextStyle(color: Colors.grey),
-        contentPadding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+        contentPadding: const EdgeInsets.symmetric(
+            vertical: 15.0, horizontal: 20.0),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30.0),
         ),
@@ -88,13 +97,15 @@ class LoginScreen extends StatelessWidget {
       decoration: InputDecoration(
         hintText: 'Password',
         hintStyle: const TextStyle(color: Colors.grey),
-        contentPadding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+        contentPadding: const EdgeInsets.symmetric(
+            vertical: 15.0, horizontal: 20.0),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30.0),
         ),
       ),
     );
   }
+
   Widget _buildSignUpButton() {
     return SizedBox(
         width: 200,
@@ -109,21 +120,40 @@ class LoginScreen extends StatelessWidget {
           ),
         ));
   }
-}
 
-Widget _buildSignInButton() {
-  return Directionality(
-    textDirection: TextDirection.rtl,
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+
+  Widget _buildSignInButton() {
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text("ليس لديك حساب؟"),
+          TextButton(
+              onPressed: () {
+                Get.off(SignUpScreen());
+              },
+              child: const Text("إنشاء حساب"))
+        ],
+      ),
+    );
+  }
+
+  Widget _buildGoogleSignInButton() {
+    return Column(
       children: [
-        const Text("ليس لديك حساب؟"),
-        TextButton(
+        const Text("Or"),
+        SizedBox(
+          width: 200,
+          height: 50,
+          child: IconButton(
+            icon: Image.asset("assets/images/google_icon.png"),
             onPressed: () {
-              Get.off( SignUpScreen());
+              authController.signInWithGoogle(); // Trigger Google Sign-In
             },
-            child: const Text("إنشاء حساب"))
+          ),
+        ),
       ],
-    ),
-  );
+    );
+  }
 }

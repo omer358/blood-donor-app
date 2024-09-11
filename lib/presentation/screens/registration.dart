@@ -26,10 +26,17 @@ class SignUpScreen extends StatelessWidget {
                 _buildSvgImage(),
                 const SizedBox(height: 20),
                 _buildEmailTextField(),
-              const SizedBox(height: 10),
+                const SizedBox(height: 10),
                 _buildPasswordTextField(),
                 const SizedBox(height: 20),
                 _buildSignUpButton(),
+                const SizedBox(
+                  height: 10,
+                ),
+                _buildGoogleSignInButton(),
+                const SizedBox(
+                  height: 10,
+                ),
                 _buildSignInButton(),
               ],
             ),
@@ -68,7 +75,8 @@ class SignUpScreen extends StatelessWidget {
       decoration: InputDecoration(
         hintText: 'example@example.com',
         hintStyle: const TextStyle(color: Colors.grey),
-        contentPadding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30.0),
         ),
@@ -85,7 +93,8 @@ class SignUpScreen extends StatelessWidget {
       decoration: InputDecoration(
         hintText: 'Password',
         hintStyle: const TextStyle(color: Colors.grey),
-        contentPadding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30.0),
         ),
@@ -99,13 +108,32 @@ class SignUpScreen extends StatelessWidget {
       height: 50,
       child: ElevatedButton(
         onPressed: () {
-          authController.registerWithEmailAndPassword();  // Trigger OTP sending from controller
+          authController
+              .registerWithEmailAndPassword();
         },
         child: const Text(
           "تسجيل",
           style: TextStyle(fontSize: 20),
         ),
       ),
+    );
+  }
+
+  Widget _buildGoogleSignInButton() {
+    return Column(
+      children: [
+        const Text("Or"),
+        SizedBox(
+          width: 200,
+          height: 50,
+          child: IconButton(
+            icon: Image.asset("assets/images/google_icon.png"),
+            onPressed: () {
+              authController.signInWithGoogle(); // Trigger Google Sign-In
+            },
+          ),
+        ),
+      ],
     );
   }
 
