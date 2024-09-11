@@ -26,7 +26,7 @@ class HomeScreen extends StatelessWidget {
       body: Obx(() {
         return IndexedStack(
           index: homeController.selectedIndex.value,
-          children: const [
+          children:  [
             NotificationsScreen(),
             ProfileScreen(),
             DonationsScreen(),
