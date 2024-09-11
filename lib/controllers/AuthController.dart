@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
+import '../presentation/screens/completeSignUp.dart';
 import '../presentation/screens/home.dart';
 import '../service/auth_service.dart';
 
@@ -18,7 +21,6 @@ class AuthController extends GetxController {
       isLoading(true);
       await authOperation();
       Get.snackbar('Success', successMessage);
-      Get.off(() => const HomeScreen());
     } catch (e) {
       _handleAuthError(e);
     } finally {
@@ -26,26 +28,46 @@ class AuthController extends GetxController {
     }
   }
 
-  // Register with email and password
+// After registration
   Future<void> registerWithEmailAndPassword() async {
-    await _handleAuthOperation(
-            () => _authService.signUpWithEmail(email.value, password.value),
-        'Registration completed successfully');
+    await _handleAuthOperation(() async {
+      await _authService.signUpWithEmail(email.value, password.value);
+      Get.to(() => const CompleteSignup());
+    }, 'تم إنشاء الحساب بنجاح!');
   }
 
-  // Login with email and password
+// After login (if needed for incomplete profiles)
   Future<void> loginWithEmailAndPassword() async {
-    await _handleAuthOperation(
-            () => _authService.signInWithEmail(email.value, password.value),
-        'Login successful');
+    await _handleAuthOperation(() async {
+      await _authService.signInWithEmail(email.value, password.value);
+      bool isComplete = await _authService.isProfileComplete();
+      log(isComplete.toString());
+      if (isComplete) {
+        log("the signup is completed");
+        Get.off(() => const HomeScreen()); // Navigate to HomeScreen if profile is complete
+      } else {
+        log("the signup is not completed");
+        Get.off(() => const CompleteSignup()); // Navigate to CompleteSignup if profile is incomplete
+      }
+    }, 'تم تسجيل الدخول بنجاح');
   }
 
-  // Sign in with Google
+// Sign in with Google
   Future<void> signInWithGoogle() async {
     await _handleAuthOperation(() async {
       bool success = await _authService.signInWithGoogle();
       if (!success) {
         throw Exception('Google Sign-in failed.');
+      }
+
+      // Check if the profile is complete
+      bool isComplete = await _authService.isProfileComplete();
+      if (isComplete) {
+        log("the signup is completed");
+        Get.off(() => const HomeScreen()); // Navigate to HomeScreen if profile is complete
+      } else {
+        log("the signup is not completed");
+        Get.off(() => const CompleteSignup()); // Navigate to CompleteSignup if profile is incomplete
       }
     }, 'Google Sign-in successful');
   }

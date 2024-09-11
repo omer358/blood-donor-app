@@ -1,4 +1,4 @@
-import 'package:blood_donor/presentation/screens/registration.dart';
+import 'package:blood_donor/presentation/screens/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       darkTheme: ThemeData(
         colorScheme: const ColorScheme.dark(),
       ),
-      home: SignUpScreen(),
+      home: LoginScreen(),
     );
   }
 }

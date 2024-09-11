@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -36,6 +38,23 @@ class AuthService {
         'email': user.email,
       });
     }
+  }
+
+  // Check if the user profile is complete
+  Future<bool> isProfileComplete() async {
+    User? user = _auth.currentUser;
+    if (user != null) {
+      log("the user is not null");
+      DocumentSnapshot userDoc = await _firestore.collection('users').doc(user.uid).get();
+      if (userDoc.exists) {
+        log("the userDocs exists");
+        return true;
+      }else {
+        return false;
+      }
+    }
+    log("the user is null");
+    return false; // Profile is incomplete if the document doesn't exist
   }
 
   // Sign in with Google
