@@ -1,12 +1,14 @@
 import 'package:blood_donor/controllers/notifications_controller.dart';
 import 'package:blood_donor/service/donation_service.dart';
+import 'package:blood_donor/service/notification_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class NotificationsScreen extends StatelessWidget {
   NotificationsScreen({super.key});
 
-  final NotificationsController controller = Get.put(NotificationsController(DonationService()));
+  final NotificationsController controller =
+      Get.put(NotificationsController(DonationService(NotificationService())));
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +21,12 @@ class NotificationsScreen extends StatelessWidget {
         if (controller.donationRequests.isEmpty) {
           return const Center(child: Text('لا توجد طلبات تبرع حالياً'));
         }
-        return ListView.builder(
+        return ListView.separated(
           itemCount: controller.donationRequests.length,
           itemBuilder: (context, index) {
             var request = controller.donationRequests[index];
-            bool active = request['active'] ?? true; // default to true if field is missing
+            bool active = request['active'] ??
+                true; // default to true if field is missing
 
             return ListTile(
               leading: CircleAvatar(
@@ -43,7 +46,9 @@ class NotificationsScreen extends StatelessWidget {
                 // Navigate to more details if needed
               },
             );
-          },
+          }, separatorBuilder: (BuildContext context, int index) {
+            return const Divider();
+        },
         );
       }),
     );

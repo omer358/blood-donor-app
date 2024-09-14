@@ -1,27 +1,30 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 
 import '../service/donation_service.dart';
 
-
 class NotificationsController extends GetxController {
   var donationRequests = <Map<String, dynamic>>[].obs;
   var isLoading = true.obs;
-  final DonationService donationService;
+  final DonationService _donationService;
 
-  NotificationsController(this.donationService);
+  NotificationsController(this._donationService);
 
   @override
   void onInit() {
+    log("NotificationController is being initialized");
     super.onInit();
     listenToDonationRequests();
+    _donationService.listenToDonationRequests();
   }
 
-  // Listen to real-time updates from Firestore
   void listenToDonationRequests() {
-    isLoading(true);
-    donationService.getDonationRequestsStream().listen((requests) {
-      donationRequests.assignAll(requests);
-      isLoading(false);
+    isLoading.value = true;
+
+    _donationService.getDonationRequestsStream().listen((requests) {
+      donationRequests.value = requests;
+      isLoading.value = false;
     });
   }
 }
