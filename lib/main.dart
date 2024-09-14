@@ -1,6 +1,7 @@
 import 'package:blood_donor/presentation/screens/completeSignUp.dart';
 import 'package:blood_donor/presentation/screens/home.dart';
 import 'package:blood_donor/presentation/screens/login.dart';
+import 'package:blood_donor/service/notification_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await NotificationService().initNotifications();
+
   runApp(const MyApp());
 }
 
