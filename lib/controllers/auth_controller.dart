@@ -1,9 +1,11 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
 import '../presentation/screens/completeSignUp.dart';
+import '../presentation/screens/email_verification.dart';
 import '../presentation/screens/home.dart';
 import '../service/auth_service.dart';
 
@@ -11,8 +13,12 @@ class AuthController extends GetxController {
   var email = ''.obs;
   var password = ''.obs;
   var isLoading = false.obs;
+  Timer? _emailVerificationTimer;
 
   final AuthService _authService = AuthService();
+
+  // Expose currentUser from AuthService
+  User? get currentUser => _authService.currentUser;
 
   // Handle common loading and error handling
   Future<void> _handleAuthOperation(
@@ -28,15 +34,6 @@ class AuthController extends GetxController {
     }
   }
 
-// After registration
-  Future<void> registerWithEmailAndPassword() async {
-    await _handleAuthOperation(() async {
-      await _authService.signUpWithEmail(email.value, password.value);
-      Get.to(() => const CompleteSignup());
-    }, 'تم إنشاء الحساب بنجاح!');
-  }
-
-// After login (if needed for incomplete profiles)
   Future<void> loginWithEmailAndPassword() async {
     await _handleAuthOperation(() async {
       await _authService.signInWithEmail(email.value, password.value);
@@ -52,7 +49,19 @@ class AuthController extends GetxController {
     }, 'تم تسجيل الدخول بنجاح');
   }
 
-// Sign in with Google
+
+  // After registration
+  Future<void> registerWithEmailAndPassword() async {
+    await _handleAuthOperation(() async {
+      UserCredential userCredential = await _authService.signUpWithEmail(
+        email.value,
+        password.value,
+      );
+      Get.to(() => EmailVerificationScreen());
+    }, 'تم إنشاء الحساب بنجاح! تحقق من بريدك الإلكتروني.');
+  }
+
+  // Sign in with Google
   Future<void> signInWithGoogle() async {
     await _handleAuthOperation(() async {
       bool success = await _authService.signInWithGoogle();
@@ -70,6 +79,42 @@ class AuthController extends GetxController {
         Get.off(() => const CompleteSignup()); // Navigate to CompleteSignup if profile is incomplete
       }
     }, 'Google Sign-in successful');
+  }
+
+
+  // Check if the email is verified
+  void checkEmailVerified() async {
+    User? user = _authService.currentUser;
+    await user?.reload(); // Reload the user to get the updated email verification status
+
+    if (user != null && user.emailVerified) {
+      // Stop the timer if email is verified
+      _emailVerificationTimer?.cancel();
+      // Check if profile is complete and navigate accordingly
+      bool isComplete = await _authService.isProfileComplete();
+      if (isComplete) {
+        log("Email verified and profile complete.");
+        Get.off(() => HomeScreen());
+      } else {
+        log("Email verified but profile is not complete.");
+        Get.snackbar("تم التأكيد", "تم تأكيد البريد الإلكتروني");
+        Get.off(() => const CompleteSignup());
+      }
+    }
+  }
+
+  // Start a timer to periodically check for email verification
+  void startEmailVerificationTimer() {
+    _emailVerificationTimer = Timer.periodic(
+      const Duration(seconds: 5),
+          (timer) => checkEmailVerified(),
+    );
+  }
+
+  @override
+  void onClose() {
+    _emailVerificationTimer?.cancel(); // Cancel the timer when controller is disposed
+    super.onClose();
   }
 
   // Handle common auth errors

@@ -25,10 +25,15 @@ class AuthService {
 
   // Register with email and password
   Future<UserCredential> signUpWithEmail(String email, String password) async {
-    return await _auth.createUserWithEmailAndPassword(
+    UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
       email: email,
       password: password,
     );
+
+    // Send email verification after registration
+    await verifyEmail();
+
+    return userCredential;
   }
 
   // Save user data to Firestore
@@ -95,5 +100,25 @@ class AuthService {
   // Check if the user is signed in (helper method)
   bool isSignedIn() {
     return _auth.currentUser != null;
+  }
+
+  // Send email verification
+  Future<void> verifyEmail() async {
+    User? user = _auth.currentUser;
+    if (user != null && !user.emailVerified) {
+      try {
+        await user.sendEmailVerification();
+        log("Verification email sent.");
+      } catch (e) {
+        log("Error sending email verification: $e");
+      }
+    }
+  }
+
+  // Check if email is verified
+  Future<bool> isEmailVerified() async {
+    User? user = _auth.currentUser;
+    await user?.reload(); // Reload the user data to ensure the latest status
+    return user?.emailVerified ?? false;
   }
 }
