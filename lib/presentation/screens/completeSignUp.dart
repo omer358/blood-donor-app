@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/signup_controller.dart';
+import '../../models/blood_type.dart';
 
 class CompleteSignup extends StatelessWidget {
   const CompleteSignup({super.key});
@@ -30,7 +31,7 @@ class CompleteSignup extends StatelessWidget {
                 const SizedBox(height: 10),
                 _buildTextField('Address', controller.address),
                 const SizedBox(height: 10),
-                _buildTextField('Blood Type', controller.bloodType),
+                _buildBloodTypeDropdown(controller),
                 const SizedBox(height: 10),
                 _buildTextField('Profession', controller.profession),
                 const SizedBox(height: 10),
@@ -92,4 +93,29 @@ class CompleteSignup extends StatelessWidget {
       ),
     );
   }
+
+  // Modified to include a dropdown for Blood Type selection
+  Widget _buildBloodTypeDropdown(SignupController controller) {
+    return Obx(() {
+      return DropdownButtonFormField<BloodType>(
+        value: controller.selectedBloodType.value,
+        items: BloodType.values.map((bloodType) {
+          return DropdownMenuItem<BloodType>(
+            value: bloodType,
+            child: Text(bloodType.displayName),
+          );
+        }).toList(),
+        onChanged: (BloodType? newValue) {
+          controller.selectedBloodType.value = newValue!;
+        },
+        decoration: InputDecoration(
+          labelText: 'Blood Type',
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+        ),
+      );
+    });
+  }
+
 }

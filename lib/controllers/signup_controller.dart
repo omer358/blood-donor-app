@@ -2,13 +2,14 @@ import 'package:blood_donor/models/donor_model.dart';
 import 'package:blood_donor/presentation/screens/home.dart';
 import 'package:get/get.dart';
 
+import '../models/blood_type.dart';
 import '../service/auth_service.dart';
 
 class SignupController extends GetxController {
   var firstName = ''.obs;
   var lastName = ''.obs;
   var address = ''.obs;
-  var bloodType = ''.obs;
+  var selectedBloodType = BloodType.aPositive.obs; // Default selection
   var profession = ''.obs;
   var phoneNumber = ''.obs;
 
@@ -21,7 +22,7 @@ class SignupController extends GetxController {
         firstName: firstName.value,
         lastName: lastName.value,
         address: address.value,
-        bloodType: bloodType.value,
+        bloodType: selectedBloodType.value.displayName,
         profession: profession.value,
         phoneNumber: phoneNumber.value,
       );
