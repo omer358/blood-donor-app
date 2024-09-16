@@ -45,7 +45,7 @@ class HomeScreen extends StatelessWidget {
           },
           items: const [
             BottomNavigationBarItem(
-              icon: Icon(Icons.notifications),
+              icon: Icon(Icons.bloodtype_rounded),
               label: 'الطلبات',
             ),
             BottomNavigationBarItem(

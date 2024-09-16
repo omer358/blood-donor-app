@@ -2,6 +2,7 @@ import 'package:blood_donor/presentation/screens/completeSignUp.dart';
 import 'package:blood_donor/presentation/screens/home.dart';
 import 'package:blood_donor/presentation/screens/login.dart';
 import 'package:blood_donor/service/notification_service.dart';
+import 'package:blood_donor/theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -31,11 +32,12 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       locale: const Locale('ar'),
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: MaterialTheme.lightScheme(),
         useMaterial3: true,
       ),
       darkTheme: ThemeData(
-        colorScheme: const ColorScheme.dark(),
+        colorScheme: MaterialTheme.darkScheme(),
+        useMaterial3: true
       ),
       home: const AuthWrapper(), // Use the new AuthWrapper for dynamic routing
     );
