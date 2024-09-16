@@ -19,7 +19,7 @@ class NotificationsScreen extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         }
         if (controller.donationRequests.isEmpty) {
-          return const Center(child: Text('لا توجد طلبات تبرع حالياً'));
+          return emptyState();
         }
         return ListView.separated(
           itemCount: controller.donationRequests.length,
@@ -46,9 +46,10 @@ class NotificationsScreen extends StatelessWidget {
                 // Navigate to more details if needed
               },
             );
-          }, separatorBuilder: (BuildContext context, int index) {
+          },
+          separatorBuilder: (BuildContext context, int index) {
             return const Divider();
-        },
+          },
         );
       }),
     );
@@ -75,5 +76,21 @@ class NotificationsScreen extends StatelessWidget {
       default:
         return Colors.grey;
     }
+  }
+
+  Widget emptyState() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            "assets/images/blood_donation.png",
+            height: 180,
+            width: 180,
+          ),
+          Text('لا توجد طلبات تبرع حالياً')
+        ],
+      ),
+    );
   }
 }
