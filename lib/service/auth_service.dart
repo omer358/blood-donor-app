@@ -121,4 +121,34 @@ class AuthService {
     await user?.reload(); // Reload the user data to ensure the latest status
     return user?.emailVerified ?? false;
   }
+
+  // Fetch user profile from Firestore
+  Future<Map<String, dynamic>?> getUserProfile() async {
+    User? user = currentUser;
+    if (user != null) {
+      DocumentSnapshot userDoc = await _firestore.collection('users').doc(user.uid).get();
+      return userDoc.data() as Map<String, dynamic>?;
+    }
+    return null;
+  }
+
+  // Update user profile in Firestore
+  Future<void> updateUserProfile({
+    required String firstName,
+    required String lastName,
+    required String address,
+    required String bloodType,
+    required String profession,
+  }) async {
+    User? user = currentUser;
+    if (user != null) {
+      await _firestore.collection('users').doc(user.uid).update({
+        'firstName': firstName,
+        'lastName': lastName,
+        'address': address,
+        'bloodType': bloodType,
+        'profession': profession,
+      });
+    }
+  }
 }
