@@ -1,13 +1,15 @@
+import 'package:blood_donor/presentation/screens/articles_screen.dart';
 import 'package:blood_donor/presentation/screens/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/home_controller.dart';
-import 'dontations.dart';
 import 'notifications.dart';
 
 class HomeScreen extends StatelessWidget {
   final HomeController homeController = Get.put(HomeController());
+
+  HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +28,10 @@ class HomeScreen extends StatelessWidget {
       body: Obx(() {
         return IndexedStack(
           index: homeController.selectedIndex.value,
-          children:  [
+          children: [
             NotificationsScreen(),
             ProfileScreen(),
-            DonationsScreen(),
+            ArticlesScreen(),
           ],
         );
       }),
@@ -49,8 +51,8 @@ class HomeScreen extends StatelessWidget {
               label: 'الملف الشخصي',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.history),
-              label: 'التبرعات السابقة',
+              icon: Icon(Icons.newspaper),
+              label: 'معلومات',
             ),
           ],
         );

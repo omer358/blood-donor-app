@@ -7,6 +7,8 @@ import '../../models/blood_type.dart';
 class ProfileScreen extends StatelessWidget {
   final ProfileController _profileController = Get.put(ProfileController());
 
+  ProfileScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,24 +23,24 @@ class ProfileScreen extends StatelessWidget {
             child: Column(
               children: [
                 _buildTextField(
-                  label: 'First Name',
+                  label: 'الإسم الأول',
                   controller: _profileController.firstNameController,
                 ),
                 const SizedBox(height: 10),
                 _buildTextField(
-                  label: 'Last Name',
+                  label: 'الإسم الأخير',
                   controller: _profileController.lastNameController,
                 ),
                 const SizedBox(height: 10),
                 _buildTextField(
-                  label: 'Address',
+                  label: 'العنوان',
                   controller: _profileController.addressController,
                 ),
                 const SizedBox(height: 10),
                 _buildBloodTypeDropdown(_profileController),
                 const SizedBox(height: 10),
                 _buildTextField(
-                  label: 'Profession',
+                  label: 'المهنة',
                   controller: _profileController.professionController,
                 ),
                 const SizedBox(height: 20),
@@ -46,7 +48,7 @@ class ProfileScreen extends StatelessWidget {
                   onPressed: () {
                     _profileController.updateUserProfile();
                   },
-                  child: const Text('Save Changes'),
+                  child: const Text('حفظ التغيرات'),
                 ),
               ],
             ),
