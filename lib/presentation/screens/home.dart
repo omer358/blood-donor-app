@@ -15,7 +15,9 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('الصفحة الرئيسية'),
+        title: Obx(() {
+          return Text(getTitle());
+        }),
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
@@ -30,8 +32,8 @@ class HomeScreen extends StatelessWidget {
           index: homeController.selectedIndex.value,
           children: [
             NotificationsScreen(),
-            ProfileScreen(),
             ArticlesScreen(),
+            ProfileScreen(),
           ],
         );
       }),
@@ -47,16 +49,30 @@ class HomeScreen extends StatelessWidget {
               label: 'الطلبات',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'الملف الشخصي',
-            ),
-            BottomNavigationBarItem(
               icon: Icon(Icons.newspaper),
               label: 'معلومات',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'الملف الشخصي',
             ),
           ],
         );
       }),
     );
+  }
+
+  String getTitle() {
+    var index = homeController.selectedIndex.value;
+    switch (index) {
+      case 0:
+        return "طلبات التبرع";
+      case 1:
+        return "معلومات عامة";
+      case 2:
+        return "الملف الشخصي";
+      default:
+        return "طلبات التبرع";
+    }
   }
 }
