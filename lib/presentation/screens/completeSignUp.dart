@@ -15,30 +15,33 @@ class CompleteSignup extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const SizedBox(height: 100),
-                _buildHeaderText(),
-                const SizedBox(height: 20),
-                _buildSvgImage(),
-                const SizedBox(height: 20),
-                _buildTextField('First Name', controller.firstName),
-                const SizedBox(height: 10),
-                _buildTextField('Last Name', controller.lastName),
-                const SizedBox(height: 10),
-                _buildTextField('Address', controller.address),
-                const SizedBox(height: 10),
-                _buildBloodTypeDropdown(controller),
-                const SizedBox(height: 10),
-                _buildTextField('Profession', controller.profession),
-                const SizedBox(height: 10),
-                _buildTextField('Phone Number', controller.phoneNumber),
-                const SizedBox(height: 20),
-                _buildCompleteSignupButton(controller),
-              ],
+          child: Directionality(
+            textDirection: TextDirection.rtl,
+            child: Container(
+              padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 100),
+                  _buildHeaderText(),
+                  const SizedBox(height: 20),
+                  _buildSvgImage(),
+                  const SizedBox(height: 20),
+                  _buildTextField('الإسم الأول', controller.firstName),
+                  const SizedBox(height: 10),
+                  _buildTextField('الإسم الأخير', controller.lastName),
+                  const SizedBox(height: 10),
+                  _buildTextField('العنوان', controller.address),
+                  const SizedBox(height: 10),
+                  _buildBloodTypeDropdown(controller),
+                  const SizedBox(height: 10),
+                  _buildTextField('المهنة', controller.profession),
+                  const SizedBox(height: 10),
+                  _buildTextField('رقم الهاتف', controller.phoneNumber),
+                  const SizedBox(height: 20),
+                  _buildCompleteSignupButton(controller),
+                ],
+              ),
             ),
           ),
         ),
@@ -87,7 +90,7 @@ class CompleteSignup extends StatelessWidget {
       child: ElevatedButton(
         onPressed: controller.completeSignup,
         child: const Text(
-          "Complete",
+          "إكمال",
           style: TextStyle(fontSize: 20),
         ),
       ),
@@ -109,7 +112,7 @@ class CompleteSignup extends StatelessWidget {
           controller.selectedBloodType.value = newValue!;
         },
         decoration: InputDecoration(
-          labelText: 'Blood Type',
+          labelText: 'نوع الدم',
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30.0),
           ),

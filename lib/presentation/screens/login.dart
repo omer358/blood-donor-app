@@ -142,7 +142,7 @@ class LoginScreen extends StatelessWidget {
   Widget _buildGoogleSignInButton() {
     return Column(
       children: [
-        const Text("Or"),
+        const Text("أو"),
         SizedBox(
           width: 200,
           height: 50,
