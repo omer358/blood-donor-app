@@ -88,7 +88,8 @@ class NotificationsScreen extends StatelessWidget {
             height: 180,
             width: 180,
           ),
-          Text('لا توجد طلبات تبرع حالياً')
+          Text('لا توجد طلبات تبرع حالياً',
+              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 24))
         ],
       ),
     );
