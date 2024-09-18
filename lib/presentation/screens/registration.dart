@@ -5,10 +5,18 @@ import 'package:get/get.dart';
 import '../../controllers/auth_controller.dart';
 import 'login.dart';
 
-class SignUpScreen extends StatelessWidget {
-  final AuthController authController = Get.put(AuthController());
+class SignUpScreen extends StatefulWidget {
 
   SignUpScreen({super.key});
+
+  @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  final AuthController authController = Get.put(AuthController());
+  bool _passwordVisible = false; // Track password visibility
+
 
   @override
   Widget build(BuildContext context) {
@@ -86,17 +94,28 @@ class SignUpScreen extends StatelessWidget {
 
   Widget _buildPasswordTextField() {
     return TextField(
-      obscureText: true,
+      obscureText: !_passwordVisible, // Control password visibility
       onChanged: (value) {
         authController.password.value = value; // Bind input to controller
       },
       decoration: InputDecoration(
         hintText: 'Password',
         hintStyle: const TextStyle(color: Colors.grey),
-        contentPadding:
-            const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+        contentPadding: const EdgeInsets.symmetric(
+            vertical: 15.0, horizontal: 20.0),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30.0),
+        ),
+        // Add a visibility toggle icon to the suffix
+        suffixIcon: IconButton(
+          icon: Icon(
+            _passwordVisible ? Icons.visibility : Icons.visibility_off,
+          ),
+          onPressed: () {
+            setState(() {
+              _passwordVisible = !_passwordVisible; // Toggle visibility
+            });
+          },
         ),
       ),
     );

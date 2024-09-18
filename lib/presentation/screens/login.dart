@@ -5,10 +5,17 @@ import 'package:get/get.dart';
 
 import '../../controllers/auth_controller.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   final AuthController authController = Get.put(AuthController());
 
-  LoginScreen({super.key});
+  bool _passwordVisible = false; // Track password visibility
 
   @override
   Widget build(BuildContext context) {
@@ -24,24 +31,16 @@ class LoginScreen extends StatelessWidget {
                 _buildHeaderText(),
                 const SizedBox(height: 20),
                 _buildSvgImage(),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 _buildEmailTextField(),
-                const SizedBox(height: 10,),
+                const SizedBox(height: 10),
                 _buildPasswordTextField(),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 _buildSignUpButton(),
-                const SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: 10),
                 _buildGoogleSignInButton(),
-                const SizedBox(
-                  height: 10,
-                ),
-                _buildSignInButton()
+                const SizedBox(height: 10),
+                _buildSignInButton(),
               ],
             ),
           ),
@@ -90,7 +89,7 @@ class LoginScreen extends StatelessWidget {
 
   Widget _buildPasswordTextField() {
     return TextField(
-      obscureText: true,
+      obscureText: !_passwordVisible, // Control password visibility
       onChanged: (value) {
         authController.password.value = value; // Bind input to controller
       },
@@ -102,39 +101,33 @@ class LoginScreen extends StatelessWidget {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30.0),
         ),
+        // Add a visibility toggle icon to the suffix
+        suffixIcon: IconButton(
+          icon: Icon(
+            _passwordVisible ? Icons.visibility : Icons.visibility_off,
+          ),
+          onPressed: () {
+            setState(() {
+              _passwordVisible = !_passwordVisible; // Toggle visibility
+            });
+          },
+        ),
       ),
     );
   }
 
   Widget _buildSignUpButton() {
     return SizedBox(
-        width: 200,
-        height: 50,
-        child: ElevatedButton(
-          onPressed: () {
-            authController.loginWithEmailAndPassword();
-          },
-          child: const Text(
-            "تسجيل الدخول",
-            style: TextStyle(fontSize: 20),
-          ),
-        ));
-  }
-
-
-  Widget _buildSignInButton() {
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text("ليس لديك حساب؟"),
-          TextButton(
-              onPressed: () {
-                Get.off(SignUpScreen());
-              },
-              child: const Text("إنشاء حساب"))
-        ],
+      width: 200,
+      height: 50,
+      child: ElevatedButton(
+        onPressed: () {
+          authController.loginWithEmailAndPassword();
+        },
+        child: const Text(
+          "تسجيل الدخول",
+          style: TextStyle(fontSize: 20),
+        ),
       ),
     );
   }
@@ -154,6 +147,24 @@ class LoginScreen extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildSignInButton() {
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text("ليس لديك حساب؟"),
+          TextButton(
+            onPressed: () {
+              Get.off(SignUpScreen());
+            },
+            child: const Text("إنشاء حساب"),
+          ),
+        ],
+      ),
     );
   }
 }
