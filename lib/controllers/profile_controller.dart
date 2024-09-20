@@ -30,11 +30,12 @@ class ProfileController extends GetxController {
         firstNameController.text = userProfile['firstName'] ?? '';
         lastNameController.text = userProfile['lastName'] ?? '';
         addressController.text = userProfile['address'] ?? '';
-        selectedBloodType.value = userProfile['bloodType'] ?? '';
+        selectedBloodType.value = BloodTypeExtension.fromDisplayName(userProfile['bloodType'] ?? '')!;
         professionController.text = userProfile['profession'] ?? '';
       }
     } catch (e) {
       Get.snackbar('Error', 'Failed to fetch profile');
+      print(e);
     } finally {
       isLoading(false);
     }

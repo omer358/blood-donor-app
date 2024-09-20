@@ -1,8 +1,13 @@
+import 'dart:developer';
+
 import 'package:blood_donor/controllers/notifications_controller.dart';
 import 'package:blood_donor/service/donation_service.dart';
 import 'package:blood_donor/service/notification_service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 
 class NotificationsScreen extends StatelessWidget {
   NotificationsScreen({super.key});
@@ -42,8 +47,26 @@ class NotificationsScreen extends StatelessWidget {
                 active ? Icons.bloodtype : Icons.check_circle,
                 color: active ? Colors.red : Colors.green,
               ),
-              onTap: () {
-                // Navigate to more details if needed
+              onTap: () async {
+                Get.snackbar("فتح الخريطة", "جاري فتح خرائط جوجل");
+                if (request.containsKey('map') && request['map'] is GeoPoint) {
+                  GeoPoint hospitalLocation = request['map'];
+                  final lat = hospitalLocation.latitude;
+                  final lng = hospitalLocation.longitude;
+
+                  // Open Google Maps with the given latitude and longitude
+                  final googleMapsUrl = Uri.parse('https://www.google.com/maps/search/?api=1&query=$lat,$lng');
+                  if (await canLaunchUrl(googleMapsUrl)) {
+                    log("can launch url");
+                await launchUrl(googleMapsUrl);
+                } else {
+                Get.snackbar('خطأ', 'لا يمكن فتح تطبيق خرائط جوجل.',
+                snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.red, colorText: Colors.white);
+                }
+                } else {
+                Get.snackbar('خطأ', 'الموقع غير متاح لهذا الطلب.',
+                snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.red, colorText: Colors.white);
+                }
               },
             );
           },

@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:blood_donor/models/blood_type.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -37,14 +38,14 @@ class AuthService {
   }
 
   // Save user data to Firestore
-  Future<void> saveUserData(String firstName, String lastName, String address, String bloodType, String profession) async {
+  Future<void> saveUserData(String firstName, String lastName, String address, BloodType bloodType, String profession) async {
     User? user = _auth.currentUser;
     if (user != null) {
       await _firestore.collection('users').doc(user.uid).set({
         'firstName': firstName,
         'lastName': lastName,
         'address': address,
-        'bloodType': bloodType,
+        'bloodType': bloodType.displayName,
         'profession': profession,
         'email': user.email,
       });

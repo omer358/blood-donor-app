@@ -22,7 +22,7 @@ class SignupController extends GetxController {
         firstName: firstName.value,
         lastName: lastName.value,
         address: address.value,
-        bloodType: selectedBloodType.value.displayName,
+        bloodType: selectedBloodType.value,
         profession: profession.value,
         phoneNumber: phoneNumber.value,
       );

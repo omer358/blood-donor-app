@@ -32,4 +32,14 @@ extension BloodTypeExtension on BloodType {
         return '';
     }
   }
+
+  // Method to convert displayName back to BloodType enum
+  static BloodType? fromDisplayName(String displayName) {
+    for (BloodType type in BloodType.values) {
+      if (type.displayName == displayName) {
+        return type;
+      }
+    }
+    return null; // Return null if no matching BloodType is found
+  }
 }

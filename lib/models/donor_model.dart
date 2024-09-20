@@ -1,8 +1,10 @@
+import 'package:blood_donor/models/blood_type.dart';
+
 class DonorModel {
   final String firstName;
   final String lastName;
   final String address;
-  final String bloodType;
+  final BloodType bloodType;
   final String profession;
   final String phoneNumber;
 
@@ -20,7 +22,7 @@ class DonorModel {
       'firstName': firstName,
       'lastName': lastName,
       'address': address,
-      'bloodType': bloodType,
+      'bloodType': bloodType.displayName,
       'profession': profession,
       'phoneNumber': phoneNumber,
     };
