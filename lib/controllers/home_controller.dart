@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+import '../screens/login.dart';
 import '../service/auth_service.dart';
 
 class HomeController extends GetxController {
@@ -13,5 +14,6 @@ class HomeController extends GetxController {
 
   void signOut() {
     _authService.signOut();
+    Get.offAll(() => LoginScreen());
   }
 }

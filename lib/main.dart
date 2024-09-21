@@ -1,6 +1,8 @@
-import 'package:blood_donor/presentation/screens/completeSignUp.dart';
-import 'package:blood_donor/presentation/screens/home.dart';
-import 'package:blood_donor/presentation/screens/login.dart';
+import 'dart:developer';
+
+import 'package:blood_donor/screens/completeSignUp.dart';
+import 'package:blood_donor/screens/home.dart';
+import 'package:blood_donor/screens/login.dart';
 import 'package:blood_donor/service/notification_service.dart';
 import 'package:blood_donor/theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -80,6 +82,7 @@ class AuthWrapper extends StatelessWidget {
               },
             );
           } else {
+            log("user state changes: log out");
             // The user is not logged in, navigate to the LoginScreen
             return LoginScreen();
           }

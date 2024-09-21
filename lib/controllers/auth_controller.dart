@@ -4,9 +4,9 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
-import '../presentation/screens/completeSignUp.dart';
-import '../presentation/screens/email_verification.dart';
-import '../presentation/screens/home.dart';
+import '../screens/completeSignUp.dart';
+import '../screens/email_verification.dart';
+import '../screens/home.dart';
 import '../service/auth_service.dart';
 
 class AuthController extends GetxController {

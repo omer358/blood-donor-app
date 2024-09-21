@@ -1,5 +1,5 @@
 import 'package:blood_donor/models/donor_model.dart';
-import 'package:blood_donor/presentation/screens/home.dart';
+import 'package:blood_donor/screens/home.dart';
 import 'package:get/get.dart';
 
 import '../models/blood_type.dart';

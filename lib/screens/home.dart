@@ -1,5 +1,7 @@
-import 'package:blood_donor/presentation/screens/articles_screen.dart';
-import 'package:blood_donor/presentation/screens/profile.dart';
+import 'dart:developer';
+
+import 'package:blood_donor/screens/articles_screen.dart';
+import 'package:blood_donor/screens/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -22,6 +24,7 @@ class HomeScreen extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () {
+              log("button logout clicked");
               homeController.signOut();
             },
           ),

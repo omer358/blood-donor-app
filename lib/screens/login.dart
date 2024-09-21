@@ -1,4 +1,4 @@
-import 'package:blood_donor/presentation/screens/registration.dart';
+import 'package:blood_donor/screens/registration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -78,8 +78,8 @@ class _LoginScreenState extends State<LoginScreen> {
       decoration: InputDecoration(
         hintText: 'example@example.com',
         hintStyle: const TextStyle(color: Colors.grey),
-        contentPadding: const EdgeInsets.symmetric(
-            vertical: 15.0, horizontal: 20.0),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30.0),
         ),
@@ -96,8 +96,8 @@ class _LoginScreenState extends State<LoginScreen> {
       decoration: InputDecoration(
         hintText: 'Password',
         hintStyle: const TextStyle(color: Colors.grey),
-        contentPadding: const EdgeInsets.symmetric(
-            vertical: 15.0, horizontal: 20.0),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30.0),
         ),

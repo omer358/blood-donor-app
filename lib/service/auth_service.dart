@@ -95,6 +95,7 @@ class AuthService {
 
   // Sign out
   Future<void> signOut() async {
+    log("the user is logged out ");
     await _auth.signOut();
   }
 
